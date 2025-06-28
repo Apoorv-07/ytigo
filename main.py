@@ -23,6 +23,7 @@ async def fetch_thumbnail(url: str = Form(...)):
     try:
         ydl_opts = {
             'quiet': True,
+            'cookiefile': 'cookies.txt',
             'skip_download': True,
             'no_warnings': True,
             'force_generic_extractor': False
@@ -42,7 +43,8 @@ async def download_video(url: str = Form(...), format: str = Form(...)):
     ydl_opts = {
         "format": "bestaudio" if format == "MP3" else "best",
         "outtmpl": f"{DOWNLOAD_DIR}/{video_id}.%(ext)s",
-        "quiet": True
+        "quiet": True,
+        'cookiefile': 'cookies.txt'
     }
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
